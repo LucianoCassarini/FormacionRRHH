@@ -40,7 +40,7 @@ def eliminaRepetidos(Repetidos):
     saved_path = os.getcwd()
 
     # Crea lista de nombres del directorio
-    file_list = nameList(saved_path + "/CorrectName")
+    file_list = nameList(saved_path + "/Certificados")
 
     mover = []
 
@@ -55,7 +55,7 @@ def eliminaRepetidos(Repetidos):
     for name in mover:
         doc = name.split("_")[0]
         if flag == doc:
-            file = saved_path + "/CorrectName/" + name
+            file = saved_path + "/Certificados/" + name
             saveNew = saved_path + "/Duplicados/" + doc
             os.rename(file, saveNew)
 

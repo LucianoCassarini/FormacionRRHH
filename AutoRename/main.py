@@ -8,7 +8,7 @@ print("Cargando certificados...")
 saved_path = os.getcwd()
 
 #Crea lista de nombres del directorio
-file_list = AuxFunc.nameList(saved_path + "/CargarCertificados")
+file_list = AuxFunc.nameList(saved_path + "/Certificados")
 
 #lista de documentos
 docList = []
@@ -19,7 +19,7 @@ if len(file_list) != 0:
     print("Procesando...")
     for name in file_list:
         text = ''
-        direccion = saved_path + "/CargarCertificados/" + name
+        direccion = saved_path + "/Certificados/" + name
         with pdfplumber.open(direccion) as temp:
             page = temp.pages[0]
             text = page.extract_text()
@@ -29,14 +29,15 @@ if len(file_list) != 0:
 
         newName = AuxFunc.newName(name, dni)
 
-        file = saved_path + "/CargarCertificados/" + name
+        file = saved_path + "/Certificados/" + name
 
-        saveNew = saved_path + "/CorrectName/" + newName
+        saveNew = saved_path + "/Certificados/" + newName
 
         os.rename(file, saveNew)
 
 
     print("Certificados listos!")
+
     # --------------Revisar Repetidos----------------
     print("Generando lista de repetidos...")
     Repetidos = AuxFunc.listDups(docList)
@@ -45,6 +46,7 @@ if len(file_list) != 0:
         print("Los documentos repetidos son: ")
         print(Repetidos)
         print("En total hay " + str(len(Repetidos)) + " duplicados.")
+
         # -----------------------Cambiar de carpeta los duplicados------------------------
         print("Quitando Repetidos...")
         AuxFunc.eliminaRepetidos(Repetidos)
