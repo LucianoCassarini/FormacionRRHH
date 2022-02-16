@@ -33,31 +33,3 @@ def listDups(lDocs):
                 repetidos.append(dni)
 
     return repetidos
-
-#Eliminar Repetidos
-def eliminaRepetidos(Repetidos):
-    # devuelve directorio del programa
-    saved_path = os.getcwd()
-
-    # Crea lista de nombres del directorio
-    file_list = nameList(saved_path + "/Certificados")
-
-    mover = []
-
-    for dni in Repetidos:
-        for file in file_list:
-            doc = file.split("_")[0]
-
-            if doc == dni:
-                mover.append(file)
-
-    flag = ""
-    for name in mover:
-        doc = name.split("_")[0]
-        if flag == doc:
-            file = saved_path + "/Certificados/" + name
-            saveNew = saved_path + "/Duplicados/" + doc
-            os.rename(file, saveNew)
-
-        else:
-            flag = doc

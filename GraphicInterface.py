@@ -38,6 +38,8 @@ print("Lista de acciónes: \n")
 LAcciones = [(1, "RenombrarCertificados"), (2, "BuscarErrores")]
 
 print("[1]. Renombrar certificados.")
+print("[2]. Validar certificados.")
+print("[3]. Crear archivo de drive.")
 print("[2]. Busqueda de errores (Drive/Panel).")
 
 accion = seleccionarAcción(LAcciones)

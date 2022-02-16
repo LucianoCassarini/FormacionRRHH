@@ -47,10 +47,6 @@ if len(file_list) != 0:
         print(Repetidos)
         print("En total hay " + str(len(Repetidos)) + " duplicados.")
 
-        # -----------------------Cambiar de carpeta los duplicados------------------------
-        print("Quitando Repetidos...")
-        AuxFunc.eliminaRepetidos(Repetidos)
-
     else:
         print("No se encontraron elementos repetidos.")
 
