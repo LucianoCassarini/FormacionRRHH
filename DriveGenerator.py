@@ -75,7 +75,6 @@ for hoja in hojas:
     for doc in Documentos:
         doc = doc.split(".")[0]
         DocumentosLimpios.append(doc)
-    DocumentosLimpios
 
     #listas de lista
     listasDni.append(DocumentosLimpios)
@@ -87,7 +86,7 @@ Aprobados = []
 Reprobados = []
 
 # n empieza de 5 porque el documento usado para realizar las pruebas tiene 5 hojas con mal formato
-n = 0
+n = 5
 while n < len(listasDni):
     j = 0
     while j < len(listasDni[n]):
@@ -125,5 +124,5 @@ hoja2.append(('DNI', 'Nombre', 'Condicion', 'Comisión'))
 for alumno in Reprobados:
     hoja2.append(alumno)
 
-wn.save('DriveProcesado.xlsx')
+wn.save('Listas/DriveProcesado.xlsx')
 
