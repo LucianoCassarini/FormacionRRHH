@@ -127,11 +127,11 @@ totalDrive = AprobadosDrive + ReprobadosDrive
 
 if len(totalPanel) > len(totalDrive):
     diferencia = len(totalPanel) - len(totalDrive)
-    print("Hay " + diferencia + " participantes que no están en drive. Estos son: ")
+    print("Hay " + str(diferencia) + " participantes que no están en drive. Estos son: ")
     print(noEncontrados(totalPanel, totalDrive))
 elif len(totalDrive) > len(totalPanel):
     diferencia = len(totalDrive) - len(totalPanel)
-    print("Hay " + diferencia + " participantes que no están en panel. Estos son:")
+    print("Hay " + str(diferencia) + " participantes que no están en panel. Estos son:")
     print(noEncontrados(totalDrive, totalPanel))
 
 #------------ Comprobación de Aprobados -----------------
