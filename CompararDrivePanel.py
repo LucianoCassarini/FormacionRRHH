@@ -1,4 +1,3 @@
-import os
 import pandas as pd
 
 #---- Separar en listas de aprobados y reprobados de panel ----
@@ -10,6 +9,34 @@ def crearListasAR(listaPanel, lAprobados, lReprobados):
             lAprobados.append(dni)
         elif condicion == "REPROBADO":
             lReprobados.append(dni)
+
+
+#------ Devuelve los elementos que no estan en ambas listas -------
+def noEncontrados(lista1, lista2):
+    listaNoEncontrados = []
+
+    for dni in lista1:
+        flag = False
+        for elem in lista2:
+            if elem == dni:
+                flag = True
+        if flag == False:
+            listaNoEncontrados.append(dni)
+
+    return listaNoEncontrados
+
+#------- Comprobar que las listas son iguales ------
+def listasIguales(lista1, lista2):
+    flag = True
+    for elem1 in lista1:
+        flag2 = False
+        for elem2 in lista2:
+            if elem2 == elem1:
+                flag2 = True
+        if flag2 == False:
+            return False
+
+    return  True
 
 #======================================================================================================================
 #                                                           RUN
@@ -83,55 +110,50 @@ for elemento in val:
 #================Verificación================
 
 #Aprobados que están reprobados en Panel
-aNoPanel = []
+aNoPanel = noEncontrados(AprobadosDrive, AprobadosPanel)
 #Aprobados que están reprobados en Drive
-aNoDrive = []
+aNoDrive = noEncontrados(AprobadosPanel, AprobadosDrive)
 #Reprobados que están aprobados en panel
-rNoPanel = []
+rNoPanel = noEncontrados(ReprobadosDrive, ReprobadosPanel)
 #Reprobados que están aprobados en panel
-rNoDrive = []
+rNoDrive = noEncontrados(ReprobadosPanel, ReprobadosDrive)
 
-#Comprovación de Aprobados
-for aD in AprobadosDrive:
-    flag = False
-    for aP in AprobadosPanel:
-        if aD == aP:
-            flag = True
-    if flag == False:
-        aNoPanel.append(aD)
+totalPanel = AprobadosPanel + ReprobadosPanel
+totalDrive = AprobadosDrive + ReprobadosDrive
 
-for aP in AprobadosPanel:
-    flag = False
-    for aD in AprobadosDrive:
-        if aP == aD:
-            flag = True
-    if flag == False:
-        aNoDrive.append(aP)
+#======================================================================================================================
+#                                               Mostrar Resultados
+#======================================================================================================================
 
-#Comprovación de Reprobados
-for rD in ReprobadosDrive:
-    flag = False
-    for rP in ReprobadosPanel:
-        if rD == rP:
-            flag = True
-    if flag == False:
-        rNoPanel.append(rD)
+if len(totalPanel) > len(totalDrive):
+    diferencia = len(totalPanel) - len(totalDrive)
+    print("Hay " + diferencia + " participantes que no están en drive. Estos son: ")
+    print(noEncontrados(totalPanel, totalDrive))
+elif len(totalDrive) > len(totalPanel):
+    diferencia = len(totalDrive) - len(totalPanel)
+    print("Hay " + diferencia + " participantes que no están en panel. Estos son:")
+    print(noEncontrados(totalDrive, totalPanel))
 
-for rP in ReprobadosPanel:
-    flag = False
-    for rD in ReprobadosDrive:
-        if rP == rD:
-            flag = True
-    if flag == False:
-        rNoDrive.append(rP)
+#------------ Comprobación de Aprobados -----------------
+if listasIguales(AprobadosDrive, AprobadosPanel):
+    print("Los Aprobados de Drive/Panel son correctos.")
+else:
+    if len(aNoPanel) != 0:
+        print("Los siguientes participantes no se encuentran en panel: ")
+        print(aNoPanel)
 
-totalPanel = len(AprobadosPanel) + len(ReprobadosPanel)
-totalDrive = len(AprobadosDrive) + len(ReprobadosDrive)
+    if len(aNoDrive) != 0:
+        print("Los siguientes participantes no se encuentran en panel: ")
+        print(aNoDrive)
 
-if totalPanel != totalDrive:
-    if totalPanel > totalDrive:
-        diferencia = totalPanel - totalDrive
-        print("Hay " + diferencia + " participantes que no están en drive.")
-    elif totalDrive > totalPanel:
-        diferencia = totalDrive - totalPanel
-        print("Hay " + diferencia + " participantes que no están en panel.")
+# ------------ Comprobación de Reprobados -----------------
+if listasIguales(ReprobadosDrive, ReprobadosPanel):
+    print("Los Reprobados de Drive/Panel son correctos.")
+else:
+    if len(rNoPanel) != 0:
+        print("Los siguientes participantes no se encuentran en panel: ")
+        print(rNoPanel)
+
+    if len(rNoDrive) != 0:
+        print("Los siguientes participantes no se encuentran en panel: ")
+        print(rNoDrive)
