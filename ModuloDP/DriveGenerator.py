@@ -125,3 +125,6 @@ def filtrarDrive():
         hoja2.append(alumno)
 
     wn.save('Listas/DriveProcesado.xlsx')
+    print("Drive listo!")
+
+filtrarDrive()

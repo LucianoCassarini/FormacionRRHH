@@ -14,7 +14,8 @@ def dni_extract(file_string):
 #Crear nombre nuevo
 def newName(name, DNI):
     # Eliminar #
-    name = name.split('#')[0] + name.split('#')[1]
+    if len(name.split('#')) > 1:
+        name = name.split('#')[0] + name.split('#')[1]
     # Nombre nuevo
     #print(name)
     newName = str(DNI) + '_' + name

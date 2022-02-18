@@ -1,4 +1,9 @@
+from ModuloCertificados import main
+from ModuloDP import DriveGenerator
+from ModuloDP import CompararDrivePanel
+
 #__________________ Comprueba que la acción sea valida _________________
+
 def comprobarAccion(LAcciones, accion):
 
     flag = False
@@ -6,10 +11,9 @@ def comprobarAccion(LAcciones, accion):
     if int(accion) > len(LAcciones) or int(accion) < 1:
         print("ERROR: La acción seleccionada no es valida.\n")
     else:
-        print("Se seleccionó la acción " + str(LAcciones[int(accion)-1][1]))
         flag = True
 
-    return  flag
+    return flag
 
 #___________________ Seleccionar Una opción valida ____________________
 def seleccionarAcción(LAcciones):
@@ -22,26 +26,39 @@ def seleccionarAcción(LAcciones):
 
     return accion
 
-#______ Llamar a la función correspondiente dependiendo de la acción seleccionada ________
-#def ejecutarAccion(accion):
 
-
-print('''
+print("""
 ███████╗░█████╗░██████╗░███╗░░░███╗░█████╗░░█████╗░██╗░█████╗░███╗░░██╗░░░██████╗░██████╗░██╗░░██╗██╗░░██╗
 ██╔════╝██╔══██╗██╔══██╗████╗░████║██╔══██╗██╔══██╗██║██╔══██╗████╗░██║░░░██╔══██╗██╔══██╗██║░░██║██║░░██║
 █████╗░░██║░░██║██████╔╝██╔████╔██║███████║██║░░╚═╝██║██║░░██║██╔██╗██║░░░██████╔╝██████╔╝███████║███████║
 ██╔══╝░░██║░░██║██╔══██╗██║╚██╔╝██║██╔══██║██║░░██╗██║██║░░██║██║╚████║░░░██╔══██╗██╔══██╗██╔══██║██╔══██║
 ██║░░░░░╚█████╔╝██║░░██║██║░╚═╝░██║██║░░██║╚█████╔╝██║╚█████╔╝██║░╚███║██╗██║░░██║██║░░██║██║░░██║██║░░██║
-╚═╝░░░░░░╚════╝░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚═╝░░╚═╝░╚════╝░╚═╝░╚════╝░╚═╝░░╚══╝╚═╝╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝ \n''')
+╚═╝░░░░░░╚════╝░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚═╝░░╚═╝░╚════╝░╚═╝░╚════╝░╚═╝░░╚══╝╚═╝╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝ \n""")
 
 print("Lista de acciónes: \n")
-LAcciones = [(1, "RenombrarCertificados"), (2, "BuscarErrores")]
+LAcciones = [(1, "Procesar archivo de drive"), (2, "Comprobar arrores (Drive/Panel)"),
+             (3, "Renombrar certificados"), (4, "Buscar errores de certificación"), (5, "Salir")]
 
-print("[1]. Renombrar certificados.")
-print("[2]. Validar certificados.")
-print("[3]. Crear archivo de drive.")
-print("[2]. Busqueda de errores (Drive/Panel).")
+flag = True
+while flag:
+    print("[1]. Procesar archivo de drive.")
+    print("[2]. Comprobar errores (Drive/Panel).")
+    print("[3]. Renombrar certificados.")
+    print("[4]. Buscar errores de certifición.")
+    print("[5]. Salir.\n")
 
-accion = seleccionarAcción(LAcciones)
 
+    accion = seleccionarAcción(LAcciones)
 
+    if accion == '5':
+        flag = False
+
+    if accion == '1':
+        DriveGenerator.filtrarDrive()
+        #Crear archivo drive
+    elif accion == '2':
+        CompararDrivePanel.ValidarErroresDrivePanel()
+       #Comparar con panel
+    elif accion == '3':
+        main.Renombrar()
+        #Renombrar certificados
