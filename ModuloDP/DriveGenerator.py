@@ -2,6 +2,7 @@ import pandas as pd
 import openpyxl
 
 def filtrarDrive():
+    print("Procesando xlsx de Drive...")
     # ///////////////////Crea Lista de Hojar del archivo///////////////////////////
     wb = openpyxl.load_workbook("Listas/drive.xlsx")
 
@@ -127,4 +128,4 @@ def filtrarDrive():
     wn.save('Listas/DriveProcesado.xlsx')
     print("Drive listo!")
 
-filtrarDrive()
+# filtrarDrive()

@@ -42,8 +42,9 @@ def listasIguales(lista1, lista2):
 #                                                           RUN
 #======================================================================================================================
 def ValidarErroresDrivePanel():
+    print("Comprobando listas de Drive y Panel...")
     # Extrae los documentos y condiciones finales del excel de panel
-    archivo = pd.read_excel("Listas/Panel.xls")
+    archivo = pd.read_excel("Listas/panel.xls")
 
     lista = []
     Documentos = []
@@ -157,3 +158,5 @@ def ValidarErroresDrivePanel():
         if len(rNoDrive) != 0:
             print("Los siguientes participantes no se encuentran en panel: ")
             print(rNoDrive)
+
+    print("Todo listo!")

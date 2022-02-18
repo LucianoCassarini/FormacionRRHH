@@ -1,4 +1,5 @@
 from ModuloCertificados import main
+from ModuloCertificados import Validaciones
 from ModuloDP import DriveGenerator
 from ModuloDP import CompararDrivePanel
 
@@ -16,7 +17,7 @@ def comprobarAccion(LAcciones, accion):
     return flag
 
 #___________________ Seleccionar Una opción valida ____________________
-def seleccionarAcción(LAcciones):
+def seleccionarAccion(LAcciones):
     accion = input("Seleccione una acción: ")
     validacion = comprobarAccion(LAcciones, accion)
     if validacion == False:
@@ -24,7 +25,7 @@ def seleccionarAcción(LAcciones):
             accion = input("Por favor vuelva a seleccionar una acción: ")
             validacion = comprobarAccion(LAcciones, accion)
 
-    return accion
+    return int(accion)
 
 
 print("""
@@ -41,24 +42,27 @@ LAcciones = [(1, "Procesar archivo de drive"), (2, "Comprobar arrores (Drive/Pan
 
 flag = True
 while flag:
+    print("\n")
     print("[1]. Procesar archivo de drive.")
     print("[2]. Comprobar errores (Drive/Panel).")
     print("[3]. Renombrar certificados.")
     print("[4]. Buscar errores de certifición.")
     print("[5]. Salir.\n")
 
+    accion = seleccionarAccion(LAcciones)
 
-    accion = seleccionarAcción(LAcciones)
-
-    if accion == '5':
+    if accion == 5:
         flag = False
 
-    if accion == '1':
+    if accion == 1:
         DriveGenerator.filtrarDrive()
         #Crear archivo drive
-    elif accion == '2':
+    elif accion == 2:
         CompararDrivePanel.ValidarErroresDrivePanel()
        #Comparar con panel
-    elif accion == '3':
+    elif accion == 3:
         main.Renombrar()
         #Renombrar certificados
+    elif accion == 4:
+        Validaciones.ValidarCertificados()
+        #Buscar errores de certificación

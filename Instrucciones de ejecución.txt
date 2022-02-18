@@ -1,0 +1,5 @@
+
+Para ejecutar el progama, haga click derecho dentro de esta carpeta y presione "Abrir en una terminal".
+
+Al abrirse la terminal escriba en ella el comando:
+python Formacion.py

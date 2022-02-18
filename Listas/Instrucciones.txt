@@ -1,0 +1,12 @@
+Pegar acá documentos
+
+Es importante que los nombres de los documentos sean los siguientes,
+
+drive.xlsx	//Descargado de drive
+panel.xls	//Descargado de panel
+
+=======================================================================================================================
+
+Al Ejecutar la función "Procesar archivo de drive." se creará en esta carpeta un archivo llamado:
+
+DriveProcesado.xlsx	//documento con 2 hojas de calculo en las cuales se encuentran los alumnos aprobados y reprobados
