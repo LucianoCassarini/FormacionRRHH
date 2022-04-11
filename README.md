@@ -21,7 +21,7 @@
 
 
 ------------
-------------
+
 #### En caso de no estar disponible la herramienta pip, esta puede instalarse de la siguiente forma:
 
 ------------
