@@ -25,7 +25,7 @@
 
 #### En caso de no estar disponible la herramienta pip, esta puede instalarse de la siguiente forma:
 
-<hr>
+# 
 
 
 ##### En Ubuntu (Para Python 3.x.x):
@@ -35,7 +35,7 @@ Instalar usando el comando:
 Cuando se complete la instalación, verificar la instalación y comprobar la versión instalada ejecutando el comando:
 `pip3 --version`
 
-<hr>
+# 
 
 
 ##### En Ubuntu (Para Python 2.x.x):
