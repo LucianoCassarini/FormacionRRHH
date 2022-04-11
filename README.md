@@ -10,7 +10,7 @@
 ------------
 
 
-###### Instalación de Dependencias:
+##### Instalación de Dependencias:
 `pip install pdfplumber`
 
 `pip install pandas`
