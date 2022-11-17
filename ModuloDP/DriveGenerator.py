@@ -1,5 +1,26 @@
-import pandas as pd
 import openpyxl
+import pandas as pd
+
+
+def cuilToDNI(listaCuil):
+    listaAux = []
+    for cuil in listaCuil:
+        dniAux = 0
+        if (len(cuil) > 8):
+            dni1 = cuil[2]
+            dni2 = cuil[3]
+            dni3 = cuil[4]
+            dni4 = cuil[5]
+            dni5 = cuil[6]
+            dni6 = cuil[7]
+            dni7 = cuil[8]
+            dni8 = cuil[9]
+            dniAux = dni1 + dni2 + dni3 + dni4 + dni5 + dni6 + dni7 + dni8
+        elif len(cuil) <= 8:
+            dniAux = cuil
+        listaAux.append(dniAux)
+    
+    return listaAux
 
 def filtrarDrive():
     print("Procesando xlsx de Drive...")
@@ -44,7 +65,7 @@ def filtrarDrive():
 
         # Crear Lista de Resultados
         flagNanCondicion = True
-        val = archivo[columnas[17]]
+        val = archivo[columnas[12]]
         for elemento in val:
             elemento = str(elemento)
             if elemento == 'nan':
@@ -81,21 +102,27 @@ def filtrarDrive():
         listasDni.append(DocumentosLimpios)
         listasCondicion.append(Condicion)
         listasNombres.append(NomCompleto)
+    
+    
+    
+    for i in range(len(listasDni)): #Convierte los posibles cuil en dni
+        listasDni[i] = cuilToDNI(listasDni[i])
+
 
     # /////////////////// Separar datos de Aprobados y Reprobados /////////////////////////
     Aprobados = []
     Reprobados = []
 
-    # n empieza de 5 porque el documento usado para realizar las pruebas tiene 5 hojas con mal formato
-    n = 5
+    n = 0
     while n < len(listasDni):
         j = 0
         while j < len(listasDni[n]):
+            
             if (listasCondicion[n])[j] == "APROBADO":
-                aux = (listasDni[n])[j], (listasNombres[n])[j], "APROBADO", hojas[n].split('- Comisión ')[1]
+                aux = (listasDni[n][j]), (listasNombres[n][j]), "APROBADO", (hojas[n].split('_')[1])
                 Aprobados.append(aux)
             elif listasCondicion[n][j] == "REPROBADO":
-                aux = (listasDni[n])[j], (listasNombres[n])[j], "REPROBADO", hojas[n].split('- Comisión ')[1]
+                aux = (listasDni[n][j]), (listasNombres[n][j]), "REPROBADO", (hojas[n].split('_')[1])
                 Reprobados.append(aux)
 
             j += 1
