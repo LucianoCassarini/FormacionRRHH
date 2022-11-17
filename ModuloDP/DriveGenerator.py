@@ -1,5 +1,6 @@
 import openpyxl
 import pandas as pd
+import Global
 
 
 def cuilToDNI(listaCuil):
@@ -55,7 +56,7 @@ def filtrarDrive():
 
         # Crear lista de dni
         flagNanDni = True
-        val = archivo[columnas[0]]
+        val = archivo[columnas[Global.columna_dni_drive]]
         for elemento in val:
             elemento = str(elemento)
             if elemento == 'nan':
@@ -65,7 +66,7 @@ def filtrarDrive():
 
         # Crear Lista de Resultados
         flagNanCondicion = True
-        val = archivo[columnas[12]]
+        val = archivo[columnas[Global.columna_condicion_drive]]
         for elemento in val:
             elemento = str(elemento)
             if elemento == 'nan':
@@ -76,8 +77,8 @@ def filtrarDrive():
         # Crear Lista de Nombre/Apellido
 
         flagNanNombre = True
-        valApellido = archivo[columnas[1]]
-        valName = archivo[columnas[2]]
+        valApellido = archivo[columnas[Global.columna_apellido_drive]]
+        valName = archivo[columnas[Global.columna_nombre_drive]]
 
         nanNameFlag = True
         n = 0
@@ -119,10 +120,10 @@ def filtrarDrive():
         while j < len(listasDni[n]):
             
             if (listasCondicion[n])[j] == "APROBADO":
-                aux = (listasDni[n][j]), (listasNombres[n][j]), "APROBADO", (hojas[n].split('_')[1])
+                aux = (listasDni[n][j]), (listasNombres[n][j]), "APROBADO", (hojas[n].split(Global.separador_comision_drive)[1])
                 Aprobados.append(aux)
             elif listasCondicion[n][j] == "REPROBADO":
-                aux = (listasDni[n][j]), (listasNombres[n][j]), "REPROBADO", (hojas[n].split('_')[1])
+                aux = (listasDni[n][j]), (listasNombres[n][j]), "REPROBADO", (hojas[n].split(Global.separador_comision_drive)[1])
                 Reprobados.append(aux)
 
             j += 1

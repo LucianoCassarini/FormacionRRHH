@@ -1,6 +1,7 @@
 import os
 from ModuloCertificados import AuxFunc
 import pandas as pd
+import Global
 
 #======================================================================================================================
 #                                             Funciones para Validaciones
@@ -85,12 +86,12 @@ def ValidarCertificados():
     columnas = columnas.tolist()
     valores = archivo.values
 
-    val = archivo[columnas[1]]
+    val = archivo[columnas[Global.columna_dni_panel]]
     for elemento in val:
         elemento = str(elemento)
         Documentos.append(elemento)
 
-    val = archivo[columnas[4]]
+    val = archivo[columnas[Global.columna_condicion_panel]]
     for elemento in val:
         elemento = str(elemento)
         Condicion.append(elemento)
