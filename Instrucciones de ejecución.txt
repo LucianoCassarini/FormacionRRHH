@@ -1,27 +1,27 @@
-Para ejecutar el progama, haga click derecho dentro de esta carpeta y
-presione "Abrir en una terminal".
+Para ejecutar el programa, hacé click derecho dentro de esta carpeta y
+presioná "Abrir en una terminal".
 
-Al abrirse la terminal escriba en ella el comando:	python Formacion.py
+Al abrirse la terminal escribí en ella el comando:	python Formacion.py
 
 #***********************************************************
 #				Instrucciones para listas
 #***********************************************************
 
 DRIVE(Solo es necesario para comparar con panel):
-	Descargar archivo de drive como .xlsx y pegarlo en la carpera “Listas”.
-	Es importante que el nombre del documento sea “drive.xlsx”
+	Descargá el archivo de drive como .xlsx y pegalo en la carpeta “Listas”.
+	Es importante que el nombre del documento sea “drive.xlsx” .
 
 PANEL(Es importante que esté descargado para buscar errores de certificación
 y diferencias entre drive y panel):
-	Exportar la lista de panel y pegarla en la carpeta “Listas”.
-	Es importante que el nombre del archivo sea “panel.xls”
+	Exportá la lista de panel y pegala en la carpeta “Listas”.
+	Es importante que el nombre del archivo sea “panel.xls” .
 
 #***********************************************************
 #				Instrucciones Certificados
 #***********************************************************
 
-Copiar y pegar los Certificados dentro de la carpeta “Certificados”.
-Cuando estos estén renombrados podés ir a buscarlos a la misma carpeta.
+Copiá y pegá los certificados dentro de la carpeta “Certificados”.
+Cuando éstos estén renombrados, podés ir a buscarlos a la misma carpeta.
 
 
 #***********************************************************
@@ -29,21 +29,21 @@ Cuando estos estén renombrados podés ir a buscarlos a la misma carpeta.
 #***********************************************************
 
 Acción [1] Procesar archivo de drive:
-	Al Ejecutar la función "Procesar archivo de drive." Se creará en la 
+	Al Ejecutar la función "Procesar archivo de drive." se creará en la 
 	carpeta “Listas” un archivo llamado DriveProcesado.xlsx.
-	Este documento posee 2 hojas de calculo una con los alumnos Aprobados
+	Este documento posee 2 hojas de cálculo; una con los alumnos Aprobados
 	y otra con los Reprobados.
 
 Acción [2]  Comprobar errores (Drive/Panel):
 !	Para realizar esta acción es necesario realizar antes la acción [1].
-	Esta acción comprueba que las listas sean iguales y te devuelve
-	la una lista de errores con los DNI de las personas que lo generan.
+	Esta acción comprueba que las listas sean iguales y devuelve una 
+	lista de errores con los DNI de las personas que lo generan.
 
 Acción [3] Renombrar certificados:
-	Esta acción renombra certificados y verifica duplicados.(no necesita de 
-	ninguna lista para hacerlo).
+	Esta acción renombra certificados y verifica duplicados. No necesita de 
+	ninguna lista para hacerlo.
 
-Acción [4] Buscar errores de vertificación:
+Acción [4] Buscar errores de verificación:
 !	Esta acción necesita la lista “panel.xls”
 	Verifica todos los posibles errores a la hora de certificar y devuelve 
 	el detalle de error.
@@ -55,7 +55,5 @@ Acción [5] Salir:
 #				Errores en listas
 #***********************************************************
 
-En caso de que el programa tire errores en las listas verificar
-el archivo Global.py y verificar que los numeros de columnas sean correctos.
-
-
+En caso de que el programa arroje errores en las listas, verificá
+el archivo Global.py y que los números de columnas sean los correctos.
