@@ -1,8 +1,0 @@
-
-Pegar en esta carpeta los certificados sin renombrar.
-
-Al ejecutar la función "Renombrar certificados." los certificados de esta carpeta se renombraran.
-
-Es importante que los documentos sigan en esta carpeta si se quiere ejecutar la función "Buscar errores de certicficación."
-
-Borrar "Instrucciones Certificados.txt" antes de correr el programa para evitar conflictos al leer los certificados.

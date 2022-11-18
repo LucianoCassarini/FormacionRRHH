@@ -1,12 +1,16 @@
-Pegar acá documentos
+Para ejecutar el progama, haga click derecho dentro de esta carpeta y
+presione "Abrir en una terminal".
 
-Es importante que los nombres de los documentos sean los siguientes,
+Al abrirse la terminal escriba en ella el comando:	python Formacion.py
 
-drive.xlsx	//Descargado de drive
-panel.xls	//Descargado de panel
+#***********************************************************
+#				Instrucciones para listas
+#***********************************************************
+DRIVE(Solo es necesario para comparar con panel):
+	Descargar archivo de drive como .xlsx y pegarlo en la carpera “Listas”.
+	Es importante que el nombre del documento sea “drive.xlsx”
 
-=======================================================================================================================
-
-Al Ejecutar la función "Procesar archivo de drive." se creará en esta carpeta un archivo llamado:
-
-DriveProcesado.xlsx	//documento con 2 hojas de calculo en las cuales se encuentran los alumnos aprobados y reprobados
+PANEL(Es importante que esté descargado para buscar errores de certificación
+y diferencias entre drive y panel):
+	Exportar la lista de panel y pegarla en la carpeta “Listas”.
+	Es importante que el nombre del archivo sea “panel.xls”
