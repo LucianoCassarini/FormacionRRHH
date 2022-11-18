@@ -12,6 +12,10 @@
 
 ##### Instalación de Dependencias:
 
+> ###### Utilizando requirements.txt:
+`pip install -r requirements.txt`
+
+> ###### Manualmente:
 `pip install pdfplumber`
 
 `pip install pandas`
