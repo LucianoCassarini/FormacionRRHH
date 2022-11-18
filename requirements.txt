@@ -1,0 +1,4 @@
+openpyxl==3.0.10
+pandas==1.5.1
+pdfplumber==0.7.5
+xlrd==2.0.1
