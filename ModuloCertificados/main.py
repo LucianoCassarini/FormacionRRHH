@@ -1,6 +1,6 @@
 import os
 from ModuloCertificados import AuxFunc
-import pdfplumber
+from PyPDF2 import PdfReader
 
 
 def Renombrar():
@@ -22,9 +22,12 @@ def Renombrar():
         for name in file_list:
             text = ''
             direccion = saved_path + "/Certificados/" + name
-            with pdfplumber.open(direccion) as temp:
-                page = temp.pages[0]
-                text = page.extract_text()
+            # with pdfplumber.open(direccion) as temp:
+            #     page = temp.pages[0]
+            #     text = page.extract_text()
+            reader = PdfReader(direccion)
+            page = reader.pages[0]
+            text = page.extract_text()
 
             dni = AuxFunc.dni_extract(text)
             docList.append(dni)
