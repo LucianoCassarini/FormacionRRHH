@@ -41,7 +41,7 @@ def filtrarDrive():
     # hojas = wb.get_sheet_names()
     hojas = wb.sheetnames
     
-    bar1 = ChargingBar('Procesando:', max=(len(hojas)+2))
+    bar1 = ChargingBar('', max=(len(hojas)+2))
     bar1.next()
     
     #! Eliminar Hoja Esqueleto
@@ -111,7 +111,8 @@ def filtrarDrive():
     sleep(0.2)
     
     wn.save('Listas/DriveProcesado.xlsx')
-    print("Drive listo!")
+    print("\n")
+    print("Drive Procesado listo! (Buscar en carpeta 'Listas')")
 
 
 # filtrarDrive()

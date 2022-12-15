@@ -1,5 +1,7 @@
 import pandas as pd
 import Global
+from time import sleep
+from progress.bar import ChargingBar
 
 #---- Separar en listas de aprobados y reprobados de panel ----
 def crearListasAR(listaPanel, lAprobados, lReprobados):
@@ -38,8 +40,10 @@ def ValidarErroresDrivePanel():
     print("Comprobando listas de Drive y Panel...")
     # Extrae los documentos y condiciones finales del excel de panel
     archivo = pd.read_excel("Listas/panel.xls")
-
-    lista = []
+    
+    bar1 = ChargingBar('', max=5)
+    bar1.next()
+    
     Documentos = []
     Correos = []
     Condicion = []
@@ -60,7 +64,10 @@ def ValidarErroresDrivePanel():
     for elemento in val:
         elemento = str(elemento)
         Condicion.append(elemento)
-
+        
+    sleep(0.2)
+    bar1.next()
+    
     # Crea una lista de tuplas de la forma (dni, condicion)
     ListaPanel = []
     i = 0
@@ -74,6 +81,9 @@ def ValidarErroresDrivePanel():
     ReprobadosPanel = []
 
     crearListasAR(ListaPanel, AprobadosPanel, ReprobadosPanel)
+    
+    sleep(0.2)
+    bar1.next()
 
     # ================================COMPROBAR PANEL/DRIVE===================================
     #* ===========  Aprobados Drive ============
@@ -103,7 +113,10 @@ def ValidarErroresDrivePanel():
         tupla = (dniAprobados[i], correoAprobados[i])
         AprobadosDrive.append(tupla)
         i += 1
-
+        
+    sleep(0.2)
+    bar1.next()
+    
     #* ============ Reprobados Drive  ============
     archivo = pd.read_excel("Listas/DriveProcesado.xlsx", sheet_name=1)
     dniReprobados = []
@@ -126,7 +139,10 @@ def ValidarErroresDrivePanel():
         tupla = (dniReprobados[i], correoReprobados[i])
         ReprobadosDrive.append(tupla)
         i += 1
-
+        
+    sleep(0.2)
+    bar1.next()
+    
     # ================Verificación================
 
     # Aprobados que están reprobados en Panel
@@ -144,30 +160,30 @@ def ValidarErroresDrivePanel():
     # ======================================================================================================================
     #                                               Mostrar Resultados
     # ======================================================================================================================
-
-    if totalPanel > totalDrive:
-        diferencia = totalPanel - totalDrive
-        print("Hay " + str(diferencia) + " participantes que no están en drive.")
-    elif totalDrive > totalPanel:
-        diferencia = totalDrive - totalPanel
-        print("Hay " + str(diferencia) + " participantes que no están en panel.")
+    print("\n")
 
     # ------------ Comprobación de Aprobados -----------------
     if len(aNoDrive) == 0 & len(aNoPanel)==0:
         print("Los Aprobados de Drive/Panel son correctos.")
     elif len(rNoDrive) == 0 & len(rNoPanel)==0:
         print("Los Reprobados de Drive/Panel son correctos.")
-    else:
+    print("\n")
+    
+    if len(aNoPanel) != 0 or len(rNoPanel) != 0:
         print("Los siguientes participantes no se encuentran en panel: ")
         if len(aNoPanel) != 0:
             print(aNoPanel)
         if len(rNoPanel) != 0:
             print(rNoPanel)
-            
+        print("\n")
+    
+    if len(aNoDrive) != 0 or len(rNoDrive) != 0:
         print("Los siguientes participantes no se encuentran en drive: ")
         if len(aNoDrive) != 0:
             print(aNoDrive)
         if len(rNoDrive) != 0:
             print(rNoDrive)
-
+    
+    
+    print("\n")
     print("Todo listo!")
