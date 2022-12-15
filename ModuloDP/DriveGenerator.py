@@ -1,6 +1,8 @@
 import openpyxl
 from openpyxl import load_workbook
 import Global
+from time import sleep
+from progress.bar import ChargingBar
 
 def cuilToDNI(cuil):
     cuil = str(cuil)
@@ -38,6 +40,11 @@ def filtrarDrive():
     # Lista de nombres de las hojas del documento
     # hojas = wb.get_sheet_names()
     hojas = wb.sheetnames
+    
+    bar1 = ChargingBar('Procesando:', max=(len(hojas)+2))
+    bar1.next()
+    
+    #! Eliminar Hoja Esqueleto
     hojas.pop(0)
 
     # * ========== COLORES ===========
@@ -69,6 +76,8 @@ def filtrarDrive():
                         row=fila, column=3).value), (sh.cell(row=fila, column=4).value), "REPROBADO", (hoja.split(Global.separador_comision_drive)[1])
                     Reprobados.append(aux)
             fila += 1
+        sleep(0.2)
+        bar1.next()
 
     # * ====================================================================================
     # *                      Crear excel con Aprobados y Reprobados
@@ -85,6 +94,9 @@ def filtrarDrive():
                 'Correo', 'Condicion', 'Comisión'))
     for alumno in Aprobados:
         hoja.append(alumno)
+    
+    bar1.next()
+    sleep(0.2)
 
     # Crea lista de reprobados
     hoja2 = wn.create_sheet("Reprobados")
@@ -94,7 +106,10 @@ def filtrarDrive():
                  'Correo', 'Condicion', 'Comisión'))
     for alumno in Reprobados:
         hoja2.append(alumno)
-
+        
+    bar1.next()
+    sleep(0.2)
+    
     wn.save('Listas/DriveProcesado.xlsx')
     print("Drive listo!")
 
