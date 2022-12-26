@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import Global
 from time import sleep
@@ -55,226 +56,235 @@ def ambasListas(lista1, lista2):
 #                                                           RUN
 #======================================================================================================================
 def ValidarErroresDrivePanel():
+    flagDocPanel = os.path.exists("Listas/panel.xls")
+    flagDocDrive = os.path.exists("Listas/DriveProcesado.xlsx")
     
-    print("Comparando listas de Drive y Panel...")
-    # Extrae los documentos y condiciones finales del excel de panel
-    archivo = pd.read_excel("Listas/panel.xls")
-    
-    bar1 = ChargingBar('', max=5)
-    bar1.next()
-    
-    Documentos = []
-    Correos = []
-    Condicion = []
-    columnas = archivo.columns
-    columnas = columnas.tolist()
+    if flagDocPanel and flagDocDrive:   
+        print("Comparando listas de Drive y Panel...")
+        # Extrae los documentos y condiciones finales del excel de panel
+        archivo = pd.read_excel("Listas/panel.xls")
 
-    val = archivo[columnas[Global.columna_dni_panel]]
-    for elemento in val:
-        elemento = str(elemento)
-        Documentos.append(elemento)
-        
-    val = archivo[columnas[Global.columna_correo_panel]]
-    for elemento in val:
-        elemento = str(elemento)
-        Correos.append(elemento)
+        bar1 = ChargingBar('', max=5)
+        bar1.next()
 
-    val = archivo[columnas[Global.columna_condicion_panel]]
-    for elemento in val:
-        elemento = str(elemento)
-        Condicion.append(elemento)
-        
-    sleep(0.2)
-    bar1.next()
-    
-    # Crea una lista de tuplas de la forma (dni, condicion)
-    ListaPanel = []
-    i = 0
-    while i != len(Documentos):
-        tupla = (Documentos[i], Correos[i], Condicion[i])
-        ListaPanel.append(tupla)
-        i += 1
+        Documentos = []
+        Correos = []
+        Condicion = []
+        columnas = archivo.columns
+        columnas = columnas.tolist()
 
-    # separa la lista de panel en lista de aprobados y Reprobados
-    AprobadosPanel = []
-    ReprobadosPanel = []
+        val = archivo[columnas[Global.columna_dni_panel]]
+        for elemento in val:
+            elemento = str(elemento)
+            Documentos.append(elemento)
 
-    crearListasAR(ListaPanel, AprobadosPanel, ReprobadosPanel)
-    
-    sleep(0.2)
-    bar1.next()
+        val = archivo[columnas[Global.columna_correo_panel]]
+        for elemento in val:
+            elemento = str(elemento)
+            Correos.append(elemento)
 
-    # ================================COMPROBAR PANEL/DRIVE===================================
-    #* ===========  Aprobados Drive ============
-    AprobadosDrive = []
-    ReprobadosDrive = []
+        val = archivo[columnas[Global.columna_condicion_panel]]
+        for elemento in val:
+            elemento = str(elemento)
+            Condicion.append(elemento)
 
-    # Extrae los documentos y condiciones finales del excel de Drive
-    archivo = pd.read_excel("Listas/DriveProcesado.xlsx", sheet_name=0)
-    dniAprobados = []
-    correoAprobados = []
-    AprobadosDrive = []
-    columnas = archivo.columns
-    columnas = columnas.tolist()
+        sleep(0.2)
+        bar1.next()
 
-    val = archivo[columnas[0]]
-    for elemento in val:
-        elemento = str(elemento)
-        dniAprobados.append(elemento)
-        
-    val = archivo[columnas[3]]
-    for elemento in val:
-        elemento = str(elemento)
-        correoAprobados.append(elemento)
-    
-    i = 0
-    while i != len(dniAprobados):
-        tupla = (dniAprobados[i], correoAprobados[i])
-        AprobadosDrive.append(tupla)
-        i += 1
-        
-    sleep(0.2)
-    bar1.next()
-    
-    #* ============ Reprobados Drive  ============
-    archivo = pd.read_excel("Listas/DriveProcesado.xlsx", sheet_name=1)
-    dniReprobados = []
-    correoReprobados = []
-    columnas = archivo.columns
-    columnas = columnas.tolist()
+        # Crea una lista de tuplas de la forma (dni, condicion)
+        ListaPanel = []
+        i = 0
+        while i != len(Documentos):
+            tupla = (Documentos[i], Correos[i], Condicion[i])
+            ListaPanel.append(tupla)
+            i += 1
 
-    val = archivo[columnas[0]]
-    for elemento in val:
-        elemento = str(elemento)
-        dniReprobados.append(elemento)
-    
-    val = archivo[columnas[3]]
-    for elemento in val:
-        elemento = str(elemento)
-        correoReprobados.append(elemento)
-    
-    i = 0
-    while i != len(dniReprobados):
-        tupla = (dniReprobados[i], correoReprobados[i])
-        ReprobadosDrive.append(tupla)
-        i += 1
-        
-    sleep(0.2)
-    bar1.next()
-    
-    # ================Verificación================
+        # separa la lista de panel en lista de aprobados y Reprobados
+        AprobadosPanel = []
+        ReprobadosPanel = []
 
-    # # Aprobados que están reprobados en Panel
-    # aNoPanel = noEncontrados(AprobadosDrive, AprobadosPanel)
-    # # Aprobados que están reprobados en Drive
-    # aNoDrive = noEncontrados(AprobadosPanel, AprobadosDrive)
-    # # Reprobados que están aprobados en panel
-    # rNoPanel = noEncontrados(ReprobadosDrive, ReprobadosPanel)
-    # # Reprobados que están aprobados en panel
-    # rNoDrive = noEncontrados(ReprobadosPanel, ReprobadosDrive)
-    
-    condicionARevisar = ambasListas(AprobadosDrive, ReprobadosPanel) + ambasListas(ReprobadosDrive, AprobadosPanel)
-    condicionARevisar = eliminarDuplicados(condicionARevisar)
-    
-    panel = AprobadosPanel + ReprobadosPanel
-    duplicadosPanel = ambasListas(AprobadosPanel, ReprobadosPanel)
-    
-    drive = AprobadosDrive + ReprobadosDrive
-    duplicadosDrive = ambasListas(AprobadosDrive, ReprobadosDrive)
-    
-    
-    faltantesPanel = noEncontrados(drive, panel)
-    faltantesPanel = eliminarDuplicados(faltantesPanel)
-    
-    faltantesDrive = noEncontrados(panel, drive)
-    faltantesDrive = eliminarDuplicados(faltantesDrive)
-    
-    
-    
-    # ======================================================================================================================
-    #                                               Mostrar Resultados
-    # ======================================================================================================================
-    print("\n")
+        crearListasAR(ListaPanel, AprobadosPanel, ReprobadosPanel)
 
-    # ------------ Comprobación de Aprobados -----------------
-    flagNoError = True
+        sleep(0.2)
+        bar1.next()
+
+        # ================================COMPROBAR PANEL/DRIVE===================================
+        #* ===========  Aprobados Drive ============
+        AprobadosDrive = []
+        ReprobadosDrive = []
+
+        # Extrae los documentos y condiciones finales del excel de Drive
+        archivo = pd.read_excel("Listas/DriveProcesado.xlsx", sheet_name=0)
+        dniAprobados = []
+        correoAprobados = []
+        AprobadosDrive = []
+        columnas = archivo.columns
+        columnas = columnas.tolist()
+
+        val = archivo[columnas[0]]
+        for elemento in val:
+            elemento = str(elemento)
+            dniAprobados.append(elemento)
+
+        val = archivo[columnas[3]]
+        for elemento in val:
+            elemento = str(elemento)
+            correoAprobados.append(elemento)
+
+        i = 0
+        while i != len(dniAprobados):
+            tupla = (dniAprobados[i], correoAprobados[i])
+            AprobadosDrive.append(tupla)
+            i += 1
+
+        sleep(0.2)
+        bar1.next()
+
+        #* ============ Reprobados Drive  ============
+        archivo = pd.read_excel("Listas/DriveProcesado.xlsx", sheet_name=1)
+        dniReprobados = []
+        correoReprobados = []
+        columnas = archivo.columns
+        columnas = columnas.tolist()
+
+        val = archivo[columnas[0]]
+        for elemento in val:
+            elemento = str(elemento)
+            dniReprobados.append(elemento)
+
+        val = archivo[columnas[3]]
+        for elemento in val:
+            elemento = str(elemento)
+            correoReprobados.append(elemento)
+
+        i = 0
+        while i != len(dniReprobados):
+            tupla = (dniReprobados[i], correoReprobados[i])
+            ReprobadosDrive.append(tupla)
+            i += 1
+
+        sleep(0.2)
+        bar1.next()
+
+        # ================Verificación================
+
+        # # Aprobados que están reprobados en Panel
+        # aNoPanel = noEncontrados(AprobadosDrive, AprobadosPanel)
+        # # Aprobados que están reprobados en Drive
+        # aNoDrive = noEncontrados(AprobadosPanel, AprobadosDrive)
+        # # Reprobados que están aprobados en panel
+        # rNoPanel = noEncontrados(ReprobadosDrive, ReprobadosPanel)
+        # # Reprobados que están aprobados en panel
+        # rNoDrive = noEncontrados(ReprobadosPanel, ReprobadosDrive)
+
+        condicionARevisar = ambasListas(AprobadosDrive, ReprobadosPanel) + ambasListas(ReprobadosDrive, AprobadosPanel)
+        condicionARevisar = eliminarDuplicados(condicionARevisar)
+
+        panel = AprobadosPanel + ReprobadosPanel
+        duplicadosPanel = ambasListas(AprobadosPanel, ReprobadosPanel)
+
+        drive = AprobadosDrive + ReprobadosDrive
+        duplicadosDrive = ambasListas(AprobadosDrive, ReprobadosDrive)
+
+
+        faltantesPanel = noEncontrados(drive, panel)
+        faltantesPanel = eliminarDuplicados(faltantesPanel)
+
+        faltantesDrive = noEncontrados(panel, drive)
+        faltantesDrive = eliminarDuplicados(faltantesDrive)
+
+
+
+        # ======================================================================================================================
+        #                                               Mostrar Resultados
+        # ======================================================================================================================
+        print("\n")
+
+        # ------------ Comprobación de Aprobados -----------------
+        flagNoError = True
+
+        if len(duplicadosDrive) != 0:
+            print('Los siguientes usuarios están duplicados en Drive:')
+            print(duplicadosDrive)
+            flagNoError = False
+
+        if len(duplicadosPanel) != 0:
+            print('Los siguientes usuarios están duplicados en Panel:')
+            print(duplicadosPanel)
+            flagNoError = False
+
+        if len(faltantesPanel) != 0:
+            print('Los siguientes usuarios no se encontraron en panel: ')
+            print(faltantesPanel)
+            flagNoError = False
+
+        if len(faltantesDrive) != 0:
+            print('Los siguientes usuarios no se encontraron en drive: ')
+            print(faltantesDrive)
+            flagNoError = False
+
+        if len(condicionARevisar) != 0:
+            print('Revisar la condición de los siguientes usuarios: ')
+            print(condicionARevisar)
+            flagNoError = False
+
+
+        if flagNoError:
+            print('No se encontraron errores!')
+        else:
+            #* ============================ Exportar errores ============================
+            flagErrorExport = input("\nDesea exportar la lista de errores a un .xls? (s/n): ")
+            if flagErrorExport == 's' or flagErrorExport == 'S':
+                # crear documento de aprovados y reprobados
+                wn = openpyxl.Workbook()
+
+                # configuro la hoja no panel
+                hoja = wn.active
+                hoja.title = "No están en panel"
+                # print(f'Hoja activa: {hoja.title}')
+
+                hoja.append(('No están en panel', ' '))
+                for alumno in faltantesPanel:
+                    hoja.append(alumno)
+
+                # Crea lista de no drive
+                hoja2 = wn.create_sheet("No están en Drive")
+                wn.active = hoja2
+
+                hoja2.append(('No están en Drive', ' '))
+                for alumno in faltantesDrive:
+                    hoja2.append(alumno)
+
+                # Crea lista de revisar condiciń
+                hoja3 = wn.create_sheet("Revisar condición")
+                wn.active = hoja3
+
+                hoja3.append(('Revisar condición', ' '))
+                for alumno in condicionARevisar:
+                    hoja3.append(alumno)
+
+                # Crea lista de duplicados panel
+                hoja4 = wn.create_sheet("Duplicados panel")
+                wn.active = hoja4
+
+                hoja4.append(('Duplicados panel', ' '))
+                for alumno in duplicadosPanel:
+                    hoja4.append(alumno)
+
+                # Crea lista de duplicados drive
+                hoja5 = wn.create_sheet("Duplicados drive")
+                wn.active = hoja5
+
+                hoja5.append(('Duplicados panel', ' '))
+                for alumno in duplicadosDrive:
+                    hoja5.append(alumno)
+
+                wn.save('Listas/ErroresDrivePanel.xlsx')
+
+        print("Todo listo!")
     
-    if len(duplicadosDrive) != 0:
-        print('Los siguientes usuarios están duplicados en Drive:')
-        print(duplicadosDrive)
-        flagNoError = False
-    
-    if len(duplicadosPanel) != 0:
-        print('Los siguientes usuarios están duplicados en Panel:')
-        print(duplicadosPanel)
-        flagNoError = False
-    
-    if len(faltantesPanel) != 0:
-        print('Los siguientes usuarios no se encontraron en panel: ')
-        print(faltantesPanel)
-        flagNoError = False
-    
-    if len(faltantesDrive) != 0:
-        print('Los siguientes usuarios no se encontraron en drive: ')
-        print(faltantesDrive)
-        flagNoError = False
-    
-    if len(condicionARevisar) != 0:
-        print('Revisar la condición de los siguientes usuarios: ')
-        print(condicionARevisar)
-        flagNoError = False
-    
-    
-    if flagNoError:
-        print('No se encontraron errores!')
+    elif flagDocDrive == False:
+        print("Primero debe ejecutar la acción [1].\n")
     else:
-        #* ============================ Exportar errores ============================
-        flagErrorExport = input("\nDesea exportar la lista de errores a un .xls? (s/n): ")
-        if flagErrorExport == 's' or flagErrorExport == 'S':
-            # crear documento de aprovados y reprobados
-            wn = openpyxl.Workbook()
-    
-            # configuro la hoja no panel
-            hoja = wn.active
-            hoja.title = "No están en panel"
-            # print(f'Hoja activa: {hoja.title}')
-    
-            hoja.append(('No están en panel', ' '))
-            for alumno in faltantesPanel:
-                hoja.append(alumno)
-    
-            # Crea lista de no drive
-            hoja2 = wn.create_sheet("No están en Drive")
-            wn.active = hoja2
-    
-            hoja2.append(('No están en Drive', ' '))
-            for alumno in faltantesDrive:
-                hoja2.append(alumno)
-            
-            # Crea lista de revisar condiciń
-            hoja3 = wn.create_sheet("Revisar condición")
-            wn.active = hoja3
-    
-            hoja3.append(('Revisar condición', ' '))
-            for alumno in condicionARevisar:
-                hoja3.append(alumno)
-            
-            # Crea lista de duplicados panel
-            hoja4 = wn.create_sheet("Duplicados panel")
-            wn.active = hoja4
-    
-            hoja4.append(('Duplicados panel', ' '))
-            for alumno in duplicadosPanel:
-                hoja4.append(alumno)
-            
-            # Crea lista de duplicados drive
-            hoja5 = wn.create_sheet("Duplicados drive")
-            wn.active = hoja5
-    
-            hoja5.append(('Duplicados panel', ' '))
-            for alumno in duplicadosDrive:
-                hoja5.append(alumno)
-    
-            wn.save('Listas/ErroresDrivePanel.xlsx')
-        
-    print("Todo listo!")
+        print('No se encontro el archivo panel en la carpeta "Listas"')
+        print('Por favor comprobar que el archivo se encuentre y el nombre del mismo sea "panel.xls" \n')

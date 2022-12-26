@@ -67,151 +67,154 @@ def comprobarRestoCertificados(certificadosNoAprobados, lReprobados, certificado
 
 def ValidarCertificados():
     ######################### Crear Lista de Documentos ###########################
+    if os.path.exists("Listas/panel.xls"):
+        # devuelve directorio del programa
+        saved_path = os.getcwd()
 
-    # devuelve directorio del programa
-    saved_path = os.getcwd()
+        # Crea lista de nombres del directorio
+        file_list = AuxFunc.nameList(saved_path + "/Certificados")
 
-    # Crea lista de nombres del directorio
-    file_list = AuxFunc.nameList(saved_path + "/Certificados")
+        dni = []
 
-    dni = []
+        for file in file_list:
+            doc = file.split("_")[0]
+            dni.append(doc)
 
-    for file in file_list:
-        doc = file.split("_")[0]
-        dni.append(doc)
+        print("Se encontraron " + str(len(dni)) + " certificados. \n")
 
-    print("Se encontraron " + str(len(dni)) + " certificados. \n")
+        ######################### Crear Listas de Aprobados y Reprobados de panel ###########################
 
-    ######################### Crear Listas de Aprobados y Reprobados de panel ###########################
+        # Extrae los documentos y condiciones finales del excel de panel
+        archivo = pd.read_excel("Listas/panel.xls")
 
-    # Extrae los documentos y condiciones finales del excel de panel
-    archivo = pd.read_excel("Listas/panel.xls")
-    
-    Documentos = []
-    Apellido = []
-    Condicion = []
-    columnas = archivo.columns
-    columnas = columnas.tolist()
-    
+        Documentos = []
+        Apellido = []
+        Condicion = []
+        columnas = archivo.columns
+        columnas = columnas.tolist()
 
-    val = archivo[columnas[Global.columna_dni_panel]]
-    for elemento in val:
-        elemento = str(elemento)
-        Documentos.append(elemento)
-    
-    val = archivo[columnas[Global.columna_apellido_panel]]
-    for elemento in val:
-        elemento = str(elemento)
-        Apellido.append(elemento)
 
-    val = archivo[columnas[Global.columna_condicion_panel]]
-    for elemento in val:
-        elemento = str(elemento)
-        Condicion.append(elemento)
+        val = archivo[columnas[Global.columna_dni_panel]]
+        for elemento in val:
+            elemento = str(elemento)
+            Documentos.append(elemento)
 
-    # Crea una lista de tuplas de la forma (dni, condicion)
-    ListaPanel = []
-    i = 0
-    while i != len(Documentos):
-        tupla = (Documentos[i], Apellido[i],Condicion[i])
-        ListaPanel.append(tupla)
-        i += 1
+        val = archivo[columnas[Global.columna_apellido_panel]]
+        for elemento in val:
+            elemento = str(elemento)
+            Apellido.append(elemento)
 
-    # separa la lista de panel en lista de aprobados y Reprobados
-    lAprobados = []
-    lReprobados = []
+        val = archivo[columnas[Global.columna_condicion_panel]]
+        for elemento in val:
+            elemento = str(elemento)
+            Condicion.append(elemento)
 
-    crearListasAR(ListaPanel, lAprobados, lReprobados)
+        # Crea una lista de tuplas de la forma (dni, condicion)
+        ListaPanel = []
+        i = 0
+        while i != len(Documentos):
+            tupla = (Documentos[i], Apellido[i],Condicion[i])
+            ListaPanel.append(tupla)
+            i += 1
 
-    print("En panel hay: ")
-    print("Participantes: " + str(len(lAprobados) + len(lReprobados)))
-    print("Aprobados: " + str(len(lAprobados)))
-    print("Reprobados: " + str(len(lReprobados)))
-    print("\n")
+        # separa la lista de panel en lista de aprobados y Reprobados
+        lAprobados = []
+        lReprobados = []
 
-    ############################# Mostrar Repetidos #################################
+        crearListasAR(ListaPanel, lAprobados, lReprobados)
 
-    Repetidos = Duplicados(dni)
+        print("En panel hay: ")
+        print("Participantes: " + str(len(lAprobados) + len(lReprobados)))
+        print("Aprobados: " + str(len(lAprobados)))
+        print("Reprobados: " + str(len(lReprobados)))
+        print("\n")
 
-    if len(Repetidos) != 0:
-        print("Hay " + str(len(Repetidos)) + " certificados reperidos:")
-        print(Repetidos)
-    elif len(Repetidos) == 0:
-        print("No hay Certificados duplicados.")
+        ############################# Mostrar Repetidos #################################
 
-    ###################################### Validación de panel ##########################################
-    certificadosNoAprobados = []
-    aprobadosNoCertificados = []
+        Repetidos = Duplicados(dni)
 
-    AprobadosCertificados(dni, lAprobados, certificadosNoAprobados, aprobadosNoCertificados)
+        if len(Repetidos) != 0:
+            print("Hay " + str(len(Repetidos)) + " certificados reperidos:")
+            print(Repetidos)
+        elif len(Repetidos) == 0:
+            print("No hay Certificados duplicados.")
 
-    # Participantes que aprobaron y faltan certificar
-    if len(aprobadosNoCertificados) != 0:
-        print("Hay " + str(
-            len(aprobadosNoCertificados)) + " participantes aprobados en panel que no fueron certificados: ")
-        print(aprobadosNoCertificados)
+        ###################################### Validación de panel ##########################################
+        certificadosNoAprobados = []
+        aprobadosNoCertificados = []
 
-    certificadosNoInscriptos = []
-    comprobarRestoCertificados(certificadosNoAprobados, lReprobados, certificadosNoInscriptos)
+        AprobadosCertificados(dni, lAprobados, certificadosNoAprobados, aprobadosNoCertificados)
 
-    # Certificados que no deben ser emitidos porque están reprobados
-    if len(certificadosNoAprobados) != 0:
-        print("Se emitieron " + str(
-            len(certificadosNoAprobados)) + " certificados a participantes que aparecen Reprobados en panel: ")
-        print(certificadosNoAprobados)
+        # Participantes que aprobaron y faltan certificar
+        if len(aprobadosNoCertificados) != 0:
+            print("Hay " + str(
+                len(aprobadosNoCertificados)) + " participantes aprobados en panel que no fueron certificados: ")
+            print(aprobadosNoCertificados)
 
-    # Certificados emitidos que no aparecen en panel
-    if len(certificadosNoInscriptos) != 0:
-        print("Se emitieron " + str(
-            len(certificadosNoInscriptos)) + " certificados a participantes que no aparecen en panel: ")
-        print(certificadosNoInscriptos)
-    
-    if (len(aprobadosNoCertificados) == 0) and (len(certificadosNoAprobados)==0) and (len(certificadosNoInscriptos)==0):
-        print("\nNo hay errores de certificación!")
+        certificadosNoInscriptos = []
+        comprobarRestoCertificados(certificadosNoAprobados, lReprobados, certificadosNoInscriptos)
+
+        # Certificados que no deben ser emitidos porque están reprobados
+        if len(certificadosNoAprobados) != 0:
+            print("Se emitieron " + str(
+                len(certificadosNoAprobados)) + " certificados a participantes que aparecen Reprobados en panel: ")
+            print(certificadosNoAprobados)
+
+        # Certificados emitidos que no aparecen en panel
+        if len(certificadosNoInscriptos) != 0:
+            print("Se emitieron " + str(
+                len(certificadosNoInscriptos)) + " certificados a participantes que no aparecen en panel: ")
+            print(certificadosNoInscriptos)
+
+        if (len(aprobadosNoCertificados) == 0) and (len(certificadosNoAprobados)==0) and (len(certificadosNoInscriptos)==0):
+            print("\nNo hay errores de certificación!")
+        else:
+           #* ============================ Exportar errores ============================
+            flagErrorExport = input("\nDesea exportar la lista de errores a un .xls? (s/n): ")
+            if flagErrorExport == 's' or flagErrorExport == 'S':
+                # crear documento de aprovados y reprobados
+                wn = openpyxl.Workbook()
+
+                #! Aprobados que faltan certificar
+                hoja = wn.active
+                hoja.title = "Aprobados no certificados"
+                # print(f'Hoja activa: {hoja.title}')
+
+                hoja.append(('DNI', 'Apellido'))
+                for alumno in aprobadosNoCertificados:
+                    hoja.append(alumno)
+
+                #! Certificados no aprobados
+                hoja2 = wn.create_sheet("Certificados no aprobados")
+                wn.active = hoja2
+
+                hoja2.append(('DNI', 'Apellido'))
+                for alumno in certificadosNoAprobados:
+                    hoja2.append(alumno)
+
+                #! Certificados no inscriptos
+                hoja3 = wn.create_sheet("Certificados no inscriptos")
+                wn.active = hoja3
+
+                hoja3.append(('DNI', 'Apellido'))
+                for alumno in certificadosNoInscriptos:
+                    hoja3.append(alumno)
+
+                wn.save('Listas/ErroresEnCertificacion.xlsx')
+
+                #! Repetidos
+                hoja4 = wn.create_sheet("Certificados Repetidos")
+                wn.active = hoja4
+
+                hoja4.append(('DNI', 'Apellido'))
+                for alumno in Repetidos:
+                    aux = (alumno, "#")
+                    hoja4.append(aux)
+
+                wn.save('Listas/ErroresEnCertificacion.xlsx')
+
+        print("Todo listo! \n")
     else:
-       #* ============================ Exportar errores ============================
-        flagErrorExport = input("\nDesea exportar la lista de errores a un .xls? (s/n): ")
-        if flagErrorExport == 's' or flagErrorExport == 'S':
-            # crear documento de aprovados y reprobados
-            wn = openpyxl.Workbook()
-    
-            #! Aprobados que faltan certificar
-            hoja = wn.active
-            hoja.title = "Aprobados no certificados"
-            # print(f'Hoja activa: {hoja.title}')
-    
-            hoja.append(('DNI', 'Apellido'))
-            for alumno in aprobadosNoCertificados:
-                hoja.append(alumno)
-    
-            #! Certificados no aprobados
-            hoja2 = wn.create_sheet("Certificados no aprobados")
-            wn.active = hoja2
-    
-            hoja2.append(('DNI', 'Apellido'))
-            for alumno in certificadosNoAprobados:
-                hoja2.append(alumno)
-            
-            #! Certificados no inscriptos
-            hoja3 = wn.create_sheet("Certificados no inscriptos")
-            wn.active = hoja3
-    
-            hoja3.append(('DNI', 'Apellido'))
-            for alumno in certificadosNoInscriptos:
-                hoja3.append(alumno)
-            
-            wn.save('Listas/ErroresEnCertificacion.xlsx')
-            
-            #! Repetidos
-            hoja4 = wn.create_sheet("Certificados Repetidos")
-            wn.active = hoja4
-    
-            hoja4.append(('DNI', 'Apellido'))
-            for alumno in Repetidos:
-                aux = (alumno, "#")
-                hoja4.append(aux)
-            
-            wn.save('Listas/ErroresEnCertificacion.xlsx')
-    
-    print("Todo listo!")
+        print('No se encontro el archivo panel en la carpeta "Listas"')
+        print('Por favor comprobar que el archivo se encuentre y el nombre del mismo sea "panel.xls" \n')
             
