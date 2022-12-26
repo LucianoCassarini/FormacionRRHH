@@ -1,4 +1,4 @@
-
+﻿
 #! Solo realizar cambios en este archivo en caso de que haya cambios en el formato de las listas
 #******************************************************************************
 #******************************************************************************
@@ -21,6 +21,7 @@ separador_comision_drive = "_" #Indica qué hay antes de la comisión en el nomb
 
 #! ================================ PANEL =====================================
 columna_dni_panel = 1
+columna_apellido_panel = 2
 columna_correo_panel = 12
 columna_condicion_panel = 4
 

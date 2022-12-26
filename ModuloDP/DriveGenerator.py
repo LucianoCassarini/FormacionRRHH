@@ -4,6 +4,7 @@ import Global
 from time import sleep
 from progress.bar import ChargingBar
 
+
 def cuilToDNI(cuil):
     cuil = str(cuil)
     cuil = cuil.split('.')[0]
@@ -33,17 +34,17 @@ def colorCelda(celda, color):
 
 
 def filtrarDrive():
-    print("Procesando xlsx de Drive...")
+    print("Procesando Drive...")
     # ///////////////////Crea Lista de Hojar del archivo///////////////////////////
     wb = load_workbook("Listas/drive.xlsx", data_only=True)
 
     # Lista de nombres de las hojas del documento
     # hojas = wb.get_sheet_names()
     hojas = wb.sheetnames
-    
+
     bar1 = ChargingBar('', max=(len(hojas)+2))
     bar1.next()
-    
+
     #! Eliminar Hoja Esqueleto
     hojas.pop(0)
 
@@ -66,14 +67,15 @@ def filtrarDrive():
         fila = 5
         while colorCelda(sh.cell(row=fila, column=1), gris) != True:
             if colorCelda(sh.cell(row=fila, column=1), rojo) != True:
-                documento = cuilToDNI(sh.cell(row=fila, column=1).value)
-                if (sh.cell(row=fila, column=13).value) == 'APROBADO':
-                    aux = documento, (sh.cell(row=fila, column=2).value), (sh.cell(
-                        row=fila, column=3).value), (sh.cell(row=fila, column=4).value), "APROBADO", (hoja.split(Global.separador_comision_drive)[1])
+                documento = cuilToDNI(
+                    sh.cell(row=fila, column=(Global.columna_dni_drive)+1).value)
+                if (sh.cell(row=fila, column=(Global.columna_condicion_drive)+1).value) == 'APROBADO':
+                    aux = documento, (sh.cell(row=fila, column=(Global.columna_apellido_drive)+1).value), (sh.cell(
+                        row=fila, column=(Global.columna_nombre_drive)+1).value), (sh.cell(row=fila, column=(Global.columna_correo_drive)+1).value), "APROBADO", (hoja.split(Global.separador_comision_drive)[1])
                     Aprobados.append(aux)
-                elif (sh.cell(row=fila, column=13).value) == 'REPROBADO':
-                    aux = documento, (sh.cell(row=fila, column=2).value), (sh.cell(
-                        row=fila, column=3).value), (sh.cell(row=fila, column=4).value), "REPROBADO", (hoja.split(Global.separador_comision_drive)[1])
+                elif (sh.cell(row=fila, column=(Global.columna_condicion_drive)+1).value) == 'REPROBADO':
+                    aux = documento, (sh.cell(row=fila, column=(Global.columna_apellido_drive)+1).value), (sh.cell(
+                        row=fila, column=(Global.columna_nombre_drive)+1).value), (sh.cell(row=fila, column=(Global.columna_correo_drive)+1).value), "REPROBADO", (hoja.split(Global.separador_comision_drive)[1])
                     Reprobados.append(aux)
             fila += 1
         sleep(0.2)
@@ -94,7 +96,7 @@ def filtrarDrive():
                 'Correo', 'Condicion', 'Comisión'))
     for alumno in Aprobados:
         hoja.append(alumno)
-    
+
     bar1.next()
     sleep(0.2)
 
@@ -106,13 +108,13 @@ def filtrarDrive():
                  'Correo', 'Condicion', 'Comisión'))
     for alumno in Reprobados:
         hoja2.append(alumno)
-        
+
     bar1.next()
     sleep(0.2)
-    
+
     wn.save('Listas/DriveProcesado.xlsx')
     print("\n")
-    print("Drive Procesado listo! (Buscar en carpeta 'Listas')")
+    print("Drive procesado con exito! (Buscar en carpeta 'Listas')\n")
 
 
 # filtrarDrive()

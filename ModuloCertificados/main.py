@@ -1,24 +1,23 @@
 import os
 from ModuloCertificados import AuxFunc
 from PyPDF2 import PdfReader
-
+from progress.bar import ChargingBar
 
 def Renombrar():
-    print("Cargando certificados...")
-
     # devuelve directorio del programa
     saved_path = os.getcwd()
 
     # Crea lista de nombres del directorio
     file_list = AuxFunc.nameList(saved_path + "/Certificados")
-
     # lista de documentos
     docList = []
     # lista de Repetidos
     Repetidos = []
 
     if len(file_list) != 0:
-        print("Procesando...")
+        bar1 = ChargingBar('Renombrando...', max=(len(file_list)+1))
+        bar1.next()
+
         for name in file_list:
             text = ''
             direccion = saved_path + "/Certificados/" + name
@@ -39,14 +38,15 @@ def Renombrar():
             saveNew = saved_path + "/Certificados/" + newName
 
             os.rename(file, saveNew)
-
-        print("Certificados listos!")
+            
+            bar1.next()
 
         # --------------Revisar Repetidos----------------
-        print("Generando lista de repetidos...")
+        print("\n")
         Repetidos = AuxFunc.listDups(docList)
 
         if len(Repetidos) != 0:
+            print("Generando lista de repetidos...")
             print("Los documentos repetidos son: ")
             print(Repetidos)
             print("En total hay " + str(len(Repetidos)) + " duplicados.")
@@ -57,4 +57,4 @@ def Renombrar():
     else:
         print("No hay certificados cargados")
 
-    print("Todo listo!")
+    print("Tarea completada (Buscar en carpeta 'Certificados')")

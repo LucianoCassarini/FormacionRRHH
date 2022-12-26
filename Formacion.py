@@ -42,11 +42,10 @@ LAcciones = [(1, "Procesar archivo de drive"), (2, "Comprobar arrores (Drive/Pan
 
 flag = True
 while flag:
-    print("\n")
-    print("[1]. Procesar archivo de drive.")
-    print("[2]. Comprobar errores (Drive/Panel).")
+    print("[1]. Procesar archivo de drive. (Requiere el erchivo 'drive.xlsx')")
+    print("[2]. Comparar listas Drive/Panel. (Requiere ejecutar acción 1 y archivo 'panel.xls')")
     print("[3]. Renombrar certificados.")
-    print("[4]. Buscar errores de certifición.")
+    print("[4]. Buscar errores de certifición. (Requiere archivo 'panel.xls')")
     print("[5]. Salir.\n")
 
     accion = seleccionarAccion(LAcciones)
