@@ -57,4 +57,4 @@ def Renombrar():
     else:
         print("No hay certificados cargados")
 
-    print("Tarea completada (Buscar en carpeta 'Certificados')")
+    print("\n Tarea completada (Buscar en carpeta 'Certificados') \n")

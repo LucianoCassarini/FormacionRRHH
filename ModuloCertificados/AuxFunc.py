@@ -1,4 +1,5 @@
 import os
+import Global
 
 #Crea una lista con los nombres de todos los archivos de la dirección pasada como parametro
 def nameList(directorio):
@@ -8,7 +9,7 @@ def nameList(directorio):
 #Extrae el DNI de el string de certificados
 def dni_extract(file_string):
     DNI = [int(temp) for temp in file_string.split() if temp.isdigit()]
-    DNI = DNI[0]
+    DNI = DNI[Global.posicion_dni]
     return DNI
 
 #Crear nombre nuevo
