@@ -1,7 +1,0 @@
-openpyxl==3.0.10
-pdfplumber==0.7.5
-progress==1.6
-progress-bar==8
-PyPDF2==2.12.1
-xlrd==2.0.1
-pandas==1.5.1
