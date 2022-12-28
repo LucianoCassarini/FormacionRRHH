@@ -1,16 +1,14 @@
-Para ejecutar el progama, haga click derecho dentro de esta carpeta y
-presione "Abrir en una terminal".
-
-Al abrirse la terminal escriba en ella el comando:	python Formacion.py
-
-#***********************************************************
+#*******************************************************************************
 #				Instrucciones para listas
-#***********************************************************
-DRIVE(Solo es necesario para comparar con panel):
-	Descargar archivo de drive como .xlsx y pegarlo en la carpera “Listas”.
+#*******************************************************************************
+DRIVE:
+	Descargar archivo de drive como .xlsx y pegarlo en esta carpera (“Listas”).
 	Es importante que el nombre del documento sea “drive.xlsx”
 
 PANEL(Es importante que esté descargado para buscar errores de certificación
 y diferencias entre drive y panel):
-	Exportar la lista de panel y pegarla en la carpeta “Listas”.
+	Exportar la lista de panel y pegarla en esta carpeta (“Listas”).
 	Es importante que el nombre del archivo sea “panel.xls”
+
+ERRORES:
+	En esta carpeta también encontrarán los archivos de error que se exporten.
