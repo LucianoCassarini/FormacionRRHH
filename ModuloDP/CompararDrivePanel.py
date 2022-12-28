@@ -189,12 +189,10 @@ def ValidarErroresDrivePanel():
 
 
         faltantesPanel = noEncontrados(drive, panel)
-        faltantesPanel = eliminarDuplicados(faltantesPanel)
+        # faltantesPanel = eliminarDuplicados(faltantesPanel)
 
         faltantesDrive = noEncontrados(panel, drive)
-        faltantesDrive = eliminarDuplicados(faltantesDrive)
-
-
+        # faltantesDrive = eliminarDuplicados(faltantesDrive)
 
         # ======================================================================================================================
         #                                               Mostrar Resultados

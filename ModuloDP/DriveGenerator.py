@@ -56,8 +56,6 @@ def filtrarDrive():
         flagSeparadores = True
         for hoja in hojas:
             if Global.separador_comision_drive not in hoja:
-                print("\n Por favor revisá el separador de nombre de hoja y comision en el archivo Global para evitar errores")
-                print("\n")
                 flagSeparadores = False
 
         if flagSeparadores:
@@ -128,6 +126,9 @@ def filtrarDrive():
             wn.save('Listas/DriveProcesado.xlsx')
             print("\n")
             print("Drive procesado con exito! (Buscar en carpeta 'Listas')\n")
+        else:
+            print("\n Por favor revisá el separador de nombre de hoja y comision en el archivo Global para evitar errores")
+            print("\n")
     else:
         print('No se encontro el archivo drive en la carpeta "Listas"')
         print('Por favor comprobar que el archivo se encuentre y el nombre del mismo sea "drive.xlsx" \n')

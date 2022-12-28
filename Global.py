@@ -16,7 +16,7 @@ columna_nombre_drive = 2
 columna_correo_drive = 3
 columna_condicion_drive = 12 #APROBADO/REPROBADO
 
-separador_comision_drive = "_" #Indica qué hay antes de la comisión en el nombre de la hoja de drive.
+separador_comision_drive = " " #Indica qué hay antes de la comisión en el nombre de la hoja de drive.
 # Un ejemplo de nombre de hoja en drive es PolisPen_C1 por lo tanto el separador es "_".
 
 nombre_hoja_esqueleto_drive = "Hoja Esqueleto" #En caso de no existir una hoja esqueleto ignorar esta variable
