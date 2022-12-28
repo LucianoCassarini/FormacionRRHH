@@ -17,7 +17,6 @@ def crearListasAR(listaPanel, lAprobados, lReprobados):
         elif condicion == "REPROBADO":
             lReprobados.append((dni, correo))
 
-
 #------ Devuelve los elementos que no estan en ambas listas -------
 def noEncontrados(lista1, lista2):
     listaNoEncontrados = []
@@ -177,9 +176,11 @@ def ValidarErroresDrivePanel():
         # # Reprobados que están aprobados en panel
         # rNoDrive = noEncontrados(ReprobadosPanel, ReprobadosDrive)
 
-        condicionARevisar = ambasListas(AprobadosDrive, ReprobadosPanel) + ambasListas(ReprobadosDrive, AprobadosPanel)
-        condicionARevisar = eliminarDuplicados(condicionARevisar)
-
+        condicionARevisar = []
+        diferenciaAprobados = noEncontrados(AprobadosDrive, AprobadosPanel)
+        diferenciaReprobados = noEncontrados(ReprobadosDrive, ReprobadosPanel)
+        condicionARevisar = diferenciaAprobados + diferenciaReprobados
+        
         panel = AprobadosPanel + ReprobadosPanel
         duplicadosPanel = ambasListas(AprobadosPanel, ReprobadosPanel)
 
