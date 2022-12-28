@@ -12,7 +12,7 @@
 
 ##### Instalación de Dependencias:
 
-> ###### Manualmente:
+> ###### Con pip3:
 `pip3 install PyPDF2`
 
 `pip3 install pandas`
