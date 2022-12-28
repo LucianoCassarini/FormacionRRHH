@@ -12,9 +12,6 @@
 
 ##### Instalación de Dependencias:
 
-> ###### Utilizando requirements.txt:
-`pip3 install -r requirements.txt`
-
 > ###### Manualmente:
 `pip3 install PyPDF2`
 
