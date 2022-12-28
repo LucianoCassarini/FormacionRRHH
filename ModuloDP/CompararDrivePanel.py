@@ -114,7 +114,7 @@ def ValidarErroresDrivePanel():
         ReprobadosDrive = []
 
         # Extrae los documentos y condiciones finales del excel de Drive
-        archivo = pd.read_excel("Listas/DriveProcesado.xlsx", sheet_name=0)
+        archivo = pd.read_excel("Listas/DriveProcesado.xlsx", sheet_name=0, engine='openpyxl')
         dniAprobados = []
         correoAprobados = []
         AprobadosDrive = []
@@ -141,7 +141,7 @@ def ValidarErroresDrivePanel():
         bar1.next()
 
         #* ============ Reprobados Drive  ============
-        archivo = pd.read_excel("Listas/DriveProcesado.xlsx", sheet_name=1)
+        archivo = pd.read_excel("Listas/DriveProcesado.xlsx", sheet_name=1, engine='openpyxl')
         dniReprobados = []
         correoReprobados = []
         columnas = archivo.columns
